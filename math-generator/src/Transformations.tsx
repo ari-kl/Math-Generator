@@ -37,7 +37,7 @@ const Transformations = ({ a, k, d, c }: VariableProps) => {
     }`,
     `${d !== 0 ? `Horizontally translated ${Math.abs(d)} units to the ${d > 0 ? "right" : "left"}` : ""}`,
     `${c !== 0 ? `Vertically translated ${Math.abs(c)} units ${c > 0 ? "up" : "down"}` : ""}`,
-  ];
+  ].filter((transformation) => transformation !== "");
 
   const [isOpen, setIsOpen] = useState(false);
 
@@ -51,6 +51,7 @@ const Transformations = ({ a, k, d, c }: VariableProps) => {
               {transformations.map((transformation, index) => (
                 <div key={index}>{transformation ? "-" + transformation : ""}</div>
               ))}
+              {transformations.length === 0 && <div key={0}>No transformations. Try generating some!</div>}
             </p>
           </div>
         )}
