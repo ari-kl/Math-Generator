@@ -1,4 +1,3 @@
-- mess up the equation: have the c value in front of the a values at times or have the k value unfactored
 - have a section where users input coordinates and it will display valid points or invalid points based on the parent function
 - show the steps to do the transformation from start to finish
     - this should show the steps to make the formula look like g(x) = af[k(x - d)]+ c if not already
@@ -6,4 +5,5 @@
     - show the mapping statement: (x,y) --> (x/k + d, ay+c) and sub in the generated points
     - show the displayed points
 - add a graph for the user's points or the generated points
+- clean the code for generating numbers
 - use LaTeX for the ui and make the ui/ux better

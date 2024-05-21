@@ -46,7 +46,7 @@ const Transformations = ({ a, k, d, c, f, b }: VariableProps) => {
     return (
         <>
             <div>
-                <button className="see-button" onClick={() => setIsOpen(!isOpen)}>Click to {isOpen ? "Hide" : "See"} The Transformations</button>
+                <button className="see-button" onClick={() => setIsOpen(!isOpen)}>{isOpen ? "Hide" : "Show"} Transformations</button>
                 {isOpen && (
                     <div>
                         <p className="transformations-text">

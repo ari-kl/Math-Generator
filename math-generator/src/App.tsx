@@ -47,7 +47,11 @@ function App() {
     }
   });
   if (b === 0) {
-    setB(Math.floor(Math.random() * (Math.floor(15) - Math.ceil(-5) + 1) + Math.ceil(-5)));
+    setB(
+      Math.floor(
+        Math.random() * (Math.floor(15) - Math.ceil(-5) + 1) + Math.ceil(-5)
+      )
+    );
   }
 
   return (
@@ -84,7 +88,22 @@ function App() {
           <option value="sin(x)">sin(x)</option>
           <option value="cos(x)">cos(x)</option>
         </select>
-        {f === "b^x" ? <button onClick={() => setB(Math.floor(Math.random() * (Math.floor(15) - Math.ceil(-5) + 1) + Math.ceil(-5)))}>Generate B</button> : ""}
+        {f === "b^x" ? (
+          <button
+            onClick={() =>
+              setB(
+                Math.floor(
+                  Math.random() * (Math.floor(15) - Math.ceil(-5) + 1) +
+                    Math.ceil(-5)
+                )
+              )
+            }
+          >
+            Generate B
+          </button>
+        ) : (
+          ""
+        )}
         <button onClick={() => setA(getRandomDecimal())}>Generate A</button>
         <button onClick={() => setK(getRandomDecimal())}>Generate K</button>
         <button
