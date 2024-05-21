@@ -41,23 +41,23 @@ const Transformations = ({ a, k, d, c }: VariableProps) => {
 
   const [isOpen, setIsOpen] = useState(false);
 
-  return (
-    <>
-      <div>
-        <button className="see-button" onClick={() => setIsOpen(!isOpen)}>Click to {isOpen ? "Hide" : "See"} The Transformations</button>
-        {isOpen && (
-          <div>
-            <p className="transformations-text">
-              {transformations.map((transformation, index) => (
-                <div key={index}>{transformation ? "-" + transformation : ""}</div>
-              ))}
-              {transformations.length === 0 && <div key={0}>No transformations. Try generating some!</div>}
-            </p>
-          </div>
-        )}
-      </div>
-    </>
-  );
+    return (
+        <>
+            <div>
+                <button className="see-button" onClick={() => setIsOpen(!isOpen)}>{isOpen ? "Hide" : "Show"} Transformations</button>
+                {isOpen && (
+                    <div>
+                        <p className="transformations-text">
+                            {transformations.map((transformation, index) => (
+                                <div key={index}>{transformation ? "-" + transformation : ""}</div>
+                            ))}
+                          {transformations.length === 0 && <div key={0}>No transformations. Generate a new equation!</div>}
+                        </p>
+                    </div>
+                )}
+            </div>
+        </>
+    );
 };
 
 export default Transformations;
