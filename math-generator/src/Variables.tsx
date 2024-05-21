@@ -11,11 +11,11 @@ interface VariableProps {
 }
 
 let Variables = ({ a, k, d, c, f, b }: VariableProps) => {
-  let a_fraction = new Fraction(a)
-  let k_fraction = new Fraction(k)
+  let a_fraction = new Fraction(a);
+  let k_fraction = new Fraction(k);
   let error_equation = Math.random() < 0.5;
 
-    let renderedFn: string = renderNamedFunction("f", a_fraction, k_fraction, d);
+  let renderedFn: string = renderNamedFunction("f", a_fraction, k_fraction, d);
 
   switch (f) {
     case "x":
@@ -25,7 +25,7 @@ let Variables = ({ a, k, d, c, f, b }: VariableProps) => {
       renderedFn = renderPowerFunction(a_fraction, k_fraction, d, 2);
       break;
     case "b^x":
-      renderedFn = renderExponentialFunction(a_fraction, k_fraction, d, b || 2);
+      renderedFn = renderExponentialFunction(a_fraction, k_fraction, d, b ? (a === 1 && b < 0 ? `(${b})` : b) : 2);
       break;
     case "√x":
       renderedFn = renderSquareRootFunction(a_fraction, k_fraction, d);
@@ -40,8 +40,8 @@ let Variables = ({ a, k, d, c, f, b }: VariableProps) => {
       renderedFn = renderNamedFunction("\\cos", a_fraction, k_fraction, d);
       break;
   }
-  
- /* if (error_equation) {
+
+  /* if (error_equation) {
     let c_at_a = Math.random() < 0.3;
     let k_unfactored = Math.random() < 1;
 
@@ -94,10 +94,10 @@ let Variables = ({ a, k, d, c, f, b }: VariableProps) => {
       );
     }
   } else { */
-    return (
-      <div>
-        <h1>
-          /* g(x) = {a === 1 ? "" : a === -1 ? "-" : a_fraction}f
+  return (
+    <div>
+      <h1>
+        {/* g(x) = {a === 1 ? "" : a === -1 ? "-" : a_fraction}f
           {Math.abs(Number(k)) === 1 ? "" : "["}
           {k === 1 ? "(x" : k === -1 ? "(-x" : k_fraction + "(x"}
           {d !== 0
@@ -106,24 +106,32 @@ let Variables = ({ a, k, d, c, f, b }: VariableProps) => {
                   : " + " + Math.abs(d) + ")"
             : ")"}
           {Math.abs(Number(k)) === 1 ? "" : "]"}
-          {c !== 0 ? (c > 0 ? " + " : " - ") + Math.abs(c) : ""} */
-         <MathJaxContext>
+          {c !== 0 ? (c > 0 ? " + " : " - ") + Math.abs(c) : ""} */}
+        <MathJaxContext>
           <MathJax>
             {`\\(g\\left(x\\right) = ${renderedFn}${renderCValue(c)}\\)`}
           </MathJax>
         </MathJaxContext>
-        </h1>
-        <h2>
-          Parent Function:{" "}
-          {f === "" ? "Not Selected" : b ? f + " - B: " + b : f}
-        </h2>
-      </div>
-    );
+      </h1>
+      <h2>
+        <MathJaxContext>
+          <MathJax>
+            {`Parent Function: \\(${renderParentFunction(f)}\\)`}
+          </MathJax>
+        </MathJaxContext>
+      </h2>
+    </div>
+  );
   // }
 };
 
 function renderFraction(fraction: Fraction) {
-  return (fraction.s == -1 ? "-" : "") + (fraction.d === 1 ? fraction.n.toString() : `\\frac{${fraction.n}}{${fraction.d}}`);
+  return (
+    (fraction.s == -1 ? "-" : "") +
+    (fraction.d === 1
+      ? fraction.n.toString()
+      : `\\frac{${fraction.n}}{${fraction.d}}`)
+  );
 }
 
 function renderFunctionInner(k: Fraction, d: number) {
@@ -132,31 +140,51 @@ function renderFunctionInner(k: Fraction, d: number) {
     return "x" + (d !== 0 ? (d > 0 ? " - " : " + ") + Math.abs(d) : "");
   }
 
-  const renderedK = (k.n === -1 && k.d === 1) ? "-" : renderFraction(k);
-  return `${renderedK}(x${d !== 0 ? (d > 0 ? " - " : " + ") + Math.abs(d) : ""})`;
+  const renderedK = k.n === -1 && k.d === 1 ? "-" : renderFraction(k);
+  return `${renderedK}(x${
+    d !== 0 ? (d > 0 ? " - " : " + ") + Math.abs(d) : ""
+  })`;
 }
 
 function renderNamedFunction(f: string, a: Fraction, k: Fraction, d: number) {
-  const outerParenOpen = (k.n === 1 && k.d === 1) ? "(" : "[";
-  const outerParenClose = (k.n === 1 && k.d === 1) ? ")" : "]";
+  const outerParenOpen = k.n === 1 && k.d === 1 ? "(" : "[";
+  const outerParenClose = k.n === 1 && k.d === 1 ? ")" : "]";
 
-  return `${renderAValue(a)}${f}${outerParenOpen}${renderFunctionInner(k, d)}${outerParenClose}`
+  return `${renderAValue(a)}${f}${outerParenOpen}${renderFunctionInner(
+    k,
+    d
+  )}${outerParenClose}`;
 }
 
-function renderPowerFunction(a: Fraction, k: Fraction, d: number, exponent: number) {
+function renderPowerFunction(
+  a: Fraction,
+  k: Fraction,
+  d: number,
+  exponent: number
+) {
   const outerParens = outerParenType(k);
-  const outerParenOpen = (a.s * a.n === 1 && a.d === 1) ? "" : `\\left${outerParens[0]}`;
-  const outerParenClose = (a.s * a.n === 1 && a.d === 1) ? "" : `\\right${outerParens[1]}`;
+  const outerParenOpen =
+    a.s * a.n === 1 && a.d === 1 ? "" : `\\left${outerParens[0]}`;
+  const outerParenClose =
+    a.s * a.n === 1 && a.d === 1 ? "" : `\\right${outerParens[1]}`;
 
-  return `${renderAValue(a)}${outerParenOpen}${renderFunctionInner(k, d)}${outerParenClose}^${exponent}`;
+  return `${renderAValue(a)}${outerParenOpen}${renderFunctionInner(
+    k,
+    d
+  )}${outerParenClose}^${exponent}`;
 }
 
 function renderLinearFunction(a: Fraction, k: Fraction, d: number) {
   const outerParens = outerParenType(k);
-  const outerParenOpen = (a.s * a.n === 1 && a.d === 1) ? "" : `\\left${outerParens[0]}`;
-  const outerParenClose = (a.s * a.n === 1 && a.d === 1) ? "" : `\\right${outerParens[1]}`;
+  const outerParenOpen =
+    a.s * a.n === 1 && a.d === 1 ? "" : `\\left${outerParens[0]}`;
+  const outerParenClose =
+    a.s * a.n === 1 && a.d === 1 ? "" : `\\right${outerParens[1]}`;
 
-  return `${renderAValue(a)}${outerParenOpen}${renderFunctionInner(k, d)}${outerParenClose}`;
+  return `${renderAValue(a)}${outerParenOpen}${renderFunctionInner(
+    k,
+    d
+  )}${outerParenClose}`;
 }
 
 function renderReciprocalFunction(a: Fraction, k: Fraction, d: number) {
@@ -167,15 +195,19 @@ function renderReciprocalFunction(a: Fraction, k: Fraction, d: number) {
     top = "-1";
   }
 
-  return `\\frac{${top} } {${bottom} } `;
+  return `\\frac{${top} } {${bottom} }`;
 }
 
 function renderSquareRootFunction(a: Fraction, k: Fraction, d: number) {
   return `${renderAValue(a)} \\sqrt{${renderFunctionInner(k, d)} } `;
 }
 
-function renderExponentialFunction(a: Fraction, k: Fraction, d: number, base: number) {
-
+function renderExponentialFunction(
+  a: Fraction,
+  k: Fraction,
+  d: number,
+  base: number
+) {
   const aValue = renderAValue(a);
   const basePart = aValue === "" ? base : `${aValue}\\left(${base}\\right)`;
 
@@ -194,5 +226,23 @@ function renderAValue(a: Fraction) {
   return Number(a) == 1 ? "" : Number(a) == -1 ? "-" : renderFraction(a);
 }
 
-
+function renderParentFunction(f: string) {
+  return f === ""
+    ? "Not Selected"
+    : f === "x"
+    ? `x`
+    : f === "x^2"
+    ? `x^2`
+    : f === "b^x"
+    ? `b^x`
+    : f === "√x"
+    ? `\\sqrt{x}`
+    : f === "1/x"
+    ? `\\frac{1}{x}`
+    : f === "sin(x)"
+    ? `sin(x)`
+    : f === "cos(x)"
+    ? `cos(x)`
+    : "Not Selected";
+}
 export default Variables;

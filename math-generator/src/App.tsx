@@ -20,7 +20,7 @@ function App() {
       }
     };
 
-    const value = generateValidValue();
+    let value = generateValidValue();
     return value;
   }
 
@@ -70,14 +70,14 @@ function App() {
               setB(
                 Math.floor(
                   Math.random() * (Math.floor(15) - Math.ceil(-5) + 1) +
-                  Math.ceil(-5)
+                    Math.ceil(-5)
                 )
               );
             }
           }}
           className="dropdown"
         >
-          <option value="f" disabled hidden>
+          <option value="" disabled hidden>
             Select Parent Function
           </option>
           <option value="x">x</option>
@@ -88,6 +88,7 @@ function App() {
           <option value="sin(x)">sin(x)</option>
           <option value="cos(x)">cos(x)</option>
         </select>
+        <button onClick={() => setA(getRandomDecimal())}>Generate A</button>
         {f === "b^x" ? (
           <button
             onClick={() =>
@@ -104,14 +105,13 @@ function App() {
         ) : (
           ""
         )}
-        <button onClick={() => setA(getRandomDecimal())}>Generate A</button>
         <button onClick={() => setK(getRandomDecimal())}>Generate K</button>
         <button
           onClick={() =>
             setD(
               Math.floor(
                 Math.random() * (Math.floor(10) - Math.ceil(-5) + 1) +
-                Math.ceil(-5)
+                  Math.ceil(-5)
               )
             )
           }
@@ -123,7 +123,7 @@ function App() {
             setC(
               Math.floor(
                 Math.random() * (Math.floor(15) - Math.ceil(-5) + 1) +
-                Math.ceil(-5)
+                  Math.ceil(-5)
               )
             )
           }
@@ -137,15 +137,19 @@ function App() {
             setD(
               Math.floor(
                 Math.random() * (Math.floor(10) - Math.ceil(-5) + 1) +
-                Math.ceil(-5)
+                  Math.ceil(-5)
               )
             );
             setC(
               Math.floor(
                 Math.random() * (Math.floor(15) - Math.ceil(-5) + 1) +
-                Math.ceil(-5)
+                  Math.ceil(-5)
               )
             );
+
+            f === "b^x"
+              ? setB(Math.floor(Math.random() * 21) - 10)
+              : setB(undefined);
           }}
         >
           Generate All
