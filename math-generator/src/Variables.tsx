@@ -10,10 +10,10 @@ interface VariableProps {
   b?: number;
 }
 
-let Variables = ({ a, k, d, c, f, b }: VariableProps) => {
-  let a_fraction = new Fraction(a);
-  let k_fraction = new Fraction(k);
-  let error_equation = Math.random() < 0.5;
+const Variables = ({ a, k, d, c, f, b }: VariableProps) => {
+  const a_fraction = new Fraction(a);
+  const k_fraction = new Fraction(k);
+  //let error_equation = Math.random() < 0.5;
 
   let renderedFn: string = renderNamedFunction("f", a_fraction, k_fraction, d);
 
@@ -25,7 +25,7 @@ let Variables = ({ a, k, d, c, f, b }: VariableProps) => {
       renderedFn = renderPowerFunction(a_fraction, k_fraction, d, 2);
       break;
     case "b^x":
-      renderedFn = renderExponentialFunction(a_fraction, k_fraction, d, b ? (a === 1 && b < 0 ? `(${b})` : b) : 2);
+      renderedFn = renderExponentialFunction(a_fraction, k_fraction, d, b || 2);
       break;
     case "√x":
       renderedFn = renderSquareRootFunction(a_fraction, k_fraction, d);
@@ -141,9 +141,8 @@ function renderFunctionInner(k: Fraction, d: number) {
   }
 
   const renderedK = k.n === -1 && k.d === 1 ? "-" : renderFraction(k);
-  return `${renderedK}(x${
-    d !== 0 ? (d > 0 ? " - " : " + ") + Math.abs(d) : ""
-  })`;
+  return `${renderedK}(x${d !== 0 ? (d > 0 ? " - " : " + ") + Math.abs(d) : ""
+    })`;
 }
 
 function renderNamedFunction(f: string, a: Fraction, k: Fraction, d: number) {
@@ -230,19 +229,19 @@ function renderParentFunction(f: string) {
   return f === ""
     ? "Not Selected"
     : f === "x"
-    ? `x`
-    : f === "x^2"
-    ? `x^2`
-    : f === "b^x"
-    ? `b^x`
-    : f === "√x"
-    ? `\\sqrt{x}`
-    : f === "1/x"
-    ? `\\frac{1}{x}`
-    : f === "sin(x)"
-    ? `sin(x)`
-    : f === "cos(x)"
-    ? `cos(x)`
-    : "Not Selected";
+      ? `x`
+      : f === "x^2"
+        ? `x^2`
+        : f === "b^x"
+          ? `b^x`
+          : f === "√x"
+            ? `\\sqrt{x}`
+            : f === "1/x"
+              ? `\\frac{1}{x}`
+              : f === "sin(x)"
+                ? `sin(x)`
+                : f === "cos(x)"
+                  ? `cos(x)`
+                  : "Not Selected";
 }
 export default Variables;

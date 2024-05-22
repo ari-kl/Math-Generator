@@ -20,7 +20,7 @@ function App() {
       }
     };
 
-    let value = generateValidValue();
+    const value = generateValidValue();
     return value;
   }
 
@@ -70,7 +70,7 @@ function App() {
               setB(
                 Math.floor(
                   Math.random() * (Math.floor(15) - Math.ceil(-5) + 1) +
-                    Math.ceil(-5)
+                  Math.ceil(-5)
                 )
               );
             }
@@ -95,7 +95,7 @@ function App() {
               setB(
                 Math.floor(
                   Math.random() * (Math.floor(15) - Math.ceil(-5) + 1) +
-                    Math.ceil(-5)
+                  Math.ceil(-5)
                 )
               )
             }
@@ -111,7 +111,7 @@ function App() {
             setD(
               Math.floor(
                 Math.random() * (Math.floor(10) - Math.ceil(-5) + 1) +
-                  Math.ceil(-5)
+                Math.ceil(-5)
               )
             )
           }
@@ -123,7 +123,7 @@ function App() {
             setC(
               Math.floor(
                 Math.random() * (Math.floor(15) - Math.ceil(-5) + 1) +
-                  Math.ceil(-5)
+                Math.ceil(-5)
               )
             )
           }
@@ -137,13 +137,13 @@ function App() {
             setD(
               Math.floor(
                 Math.random() * (Math.floor(10) - Math.ceil(-5) + 1) +
-                  Math.ceil(-5)
+                Math.ceil(-5)
               )
             );
             setC(
               Math.floor(
                 Math.random() * (Math.floor(15) - Math.ceil(-5) + 1) +
-                  Math.ceil(-5)
+                Math.ceil(-5)
               )
             );
 
